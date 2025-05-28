@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Paramètres - E-Sport CMS</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 text-gray-900" id="body">
+     <!-- Header -->
+<header class="w-full bg-white shadow px-6 py-4 flex justify-end items-center">
+    <a href="index.html" class="text-indigo-600 hover:underline font-medium">Se déconnecter</a>
+  </header>
+  
+
+  <div class="flex min-h-screen">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-gray-800 text-white flex flex-col p-4">
+      <h1 class="text-2xl font-bold mb-6">🎮 E-Sport CMS</h1>
+      <nav class="space-y-3">
+        <a href="index.html" class="block hover:text-indigo-400">🏠 Dashboard</a>
+        <a href="players.html" class="block hover:text-indigo-400">🧑‍🤝‍🧑 Joueurs</a>
+        <a href="teams.html" class="block hover:text-indigo-400">👥 Équipes</a>
+        <a href="jeux.html" class="block hover:text-indigo-400">🕹️ Jeux</a>
+        <a href="tournois.html" class="block hover:text-indigo-400">🏆 Tournois</a>
+        <a href="matchs.html" class="block hover:text-indigo-400">🎮 Matchs</a>
+        <a href="statistiques.html" class="block hover:text-indigo-400">📊 Statistiques</a>
+        <a href="setting.html" class="block font-bold text-indigo-400">⚙️ Paramètres</a>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 p-6 space-y-6">
+      <h2 class="text-3xl font-semibold">⚙️ Paramètres</h2>
+
+      <!-- Onglets -->
+      <div>
+        <div class="flex border-b space-x-4 mb-4">
+          <button onclick="showTab('tab-users', event)" class="tab-button font-medium py-2 px-4 border-b-2 border-indigo-500 text-indigo-600">Utilisateurs</button>
+          <button onclick="showTab('tab-roles', event)" class="tab-button font-medium py-2 px-4 text-gray-600">Rôles</button>
+          <button onclick="showTab('tab-theme', event)" class="tab-button font-medium py-2 px-4 text-gray-600">Personnalisation</button>
+          <button onclick="showTab('tab-notifs', event)" class="tab-button font-medium py-2 px-4 text-gray-600">Notifications</button>
+          <button onclick="showTab('tab-import', event)" class="tab-button font-medium py-2 px-4 text-gray-600">Import / Export</button>
+        </div>
+
+        <!-- Utilisateurs -->
+        <div id="tab-users" class="tab-content">
+          <div class="flex justify-between items-center mb-2">
+            <h3 class="text-lg font-medium">Utilisateurs</h3>
+            <button onclick="toggleModal('userModal')" class="bg-indigo-500 text-white px-4 py-1 rounded">Ajouter</button>
+          </div>
+          <table class="w-full table-auto bg-white rounded shadow">
+            <thead class="bg-gray-200">
+              <tr>
+                <th class="px-4 py-2 text-left">Nom</th>
+                <th class="px-4 py-2 text-left">Email</th>
+                <th class="px-4 py-2 text-left">Rôle</th>
+                <th class="px-4 py-2">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-t">
+                <td class="px-4 py-2">Admin</td>
+                <td class="px-4 py-2">admin@cms.com</td>
+                <td class="px-4 py-2">Administrateur</td>
+                <td class="px-4 py-2 text-center space-x-2">
+                  <button class="text-blue-500 hover:underline">Modifier</button>
+                  <button class="text-red-500 hover:underline">Supprimer</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Rôles -->
+        <div id="tab-roles" class="tab-content hidden">
+          <div class="flex justify-between items-center mb-2">
+            <h3 class="text-lg font-medium">Rôles & Permissions</h3>
+            <button onclick="toggleModal('roleModal')" class="bg-indigo-500 text-white px-4 py-1 rounded">Nouveau rôle</button>
+          </div>
+          <table class="w-full table-auto bg-white rounded shadow">
+            <thead class="bg-gray-200">
+              <tr>
+                <th class="px-4 py-2 text-left">Nom du rôle</th>
+                <th class="px-4 py-2 text-left">Permissions</th>
+                <th class="px-4 py-2">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-t">
+                <td class="px-4 py-2">Administrateur</td>
+                <td class="px-4 py-2">Créer, Modifier, Supprimer</td>
+                <td class="px-4 py-2 text-center space-x-2">
+                  <button class="text-blue-500 hover:underline">Modifier</button>
+                  <button class="text-red-500 hover:underline">Supprimer</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Personnalisation -->
+        <div id="tab-theme" class="tab-content hidden">
+          <h3 class="text-lg font-medium mb-2">Personnalisation</h3>
+          <label class="inline-flex items-center">
+            <input type="radio" name="theme" value="light" class="form-radio text-indigo-600" checked onchange="switchTheme('light')">
+            <span class="ml-2">Mode clair</span>
+          </label>
+          <label class="inline-flex items-center ml-6">
+            <input type="radio" name="theme" value="dark" class="form-radio text-indigo-600" onchange="switchTheme('dark')">
+            <span class="ml-2">Mode sombre</span>
+          </label>
+        </div>
+
+        <!-- Notifications -->
+        <div id="tab-notifs" class="tab-content hidden">
+          <h3 class="text-lg font-medium mb-2">Notifications</h3>
+          <div class="space-y-4">
+            <label class="block">
+              <input type="radio" name="notifType" value="email" class="form-radio text-indigo-600" onclick="toggleNotifFields('email')"> <span class="ml-2">Email</span>
+              <input id="emailField" type="email" placeholder="Email" class="ml-4 border p-1 rounded inline-block" />
+            </label>
+            <label class="block">
+              <input type="radio" name="notifType" value="sms" class="form-radio text-indigo-600" onclick="toggleNotifFields('sms')"> <span class="ml-2">SMS</span>
+              <input id="smsField" type="text" placeholder="N° de GSM" class="ml-4 border p-1 rounded inline-block" />
+            </label>
+            <label class="block">
+              <input type="radio" name="notifType" value="none" class="form-radio text-indigo-600" onclick="toggleNotifFields('none')"> <span class="ml-2">Aucun</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Import / Export -->
+        <div id="tab-import" class="tab-content hidden">
+          <h3 class="text-lg font-medium mb-2">Import / Export</h3>
+          <div class="space-x-2">
+            <input type="file" class="border rounded p-1" />
+            <button class="bg-green-500 text-white px-3 py-1 rounded">Importer</button>
+            <button class="bg-blue-500 text-white px-3 py-1 rounded">Exporter</button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    function toggleModal(id) {
+      const modal = document.getElementById(id);
+      modal.classList.toggle('hidden');
+    }
+
+    function showTab(tabId, event) {
+      document.querySelectorAll('.tab-content').forEach(tab => tab.classList.add('hidden'));
+      document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('text-indigo-600', 'border-indigo-500'));
+      document.getElementById(tabId).classList.remove('hidden');
+      event.target.classList.add('text-indigo-600', 'border-indigo-500');
+    }
+
+    function toggleNotifFields(type) {
+      document.getElementById('emailField').style.display = (type === 'email') ? 'inline-block' : 'none';
+      document.getElementById('smsField').style.display = (type === 'sms') ? 'inline-block' : 'none';
+    }
+
+    function switchTheme(theme) {
+      const body = document.getElementById('body');
+      if (theme === 'dark') {
+        body.classList.remove('bg-gray-100', 'text-gray-900');
+        body.classList.add('bg-gray-900', 'text-white');
+      } else {
+        body.classList.remove('bg-gray-900', 'text-white');
+        body.classList.add('bg-gray-100', 'text-gray-900');
+      }
+    }
+
+    // Hide both input fields by default
+    toggleNotifFields('none');
+  </script>
+</body>
+</html>

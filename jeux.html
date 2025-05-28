@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jeux - E-Sport CMS</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 text-gray-900">
+     <!-- Header -->
+<header class="w-full bg-white shadow px-6 py-4 flex justify-end items-center">
+    <button onclick="document.getElementById('loginModal').classList.remove('hidden')" class="text-indigo-600 hover:underline font-medium">Se connecter</button>
+  </header>
+  
+  <!-- Login Modal -->
+  <div id="loginModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+    <div class="bg-white rounded-lg shadow-lg w-full max-w-sm p-6 relative">
+      <button onclick="document.getElementById('loginModal').classList.add('hidden')" class="absolute top-2 right-2 text-gray-500 hover:text-gray-800 text-xl">&times;</button>
+      <h2 class="text-xl font-semibold mb-4 text-center">Connexion</h2>
+      <form>
+        <div class="mb-4">
+          <label for="login" class="block text-sm font-medium text-gray-700">Login</label>
+          <input type="text" id="login" class="mt-1 w-full border rounded-md px-3 py-2 focus:outline-none focus:ring focus:border-indigo-300" required>
+        </div>
+        <div class="mb-4">
+          <label for="password" class="block text-sm font-medium text-gray-700">Mot de passe</label>
+          <input type="password" id="password" class="mt-1 w-full border rounded-md px-3 py-2 focus:outline-none focus:ring focus:border-indigo-300" required>
+        </div>
+        <button type="submit" class="w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700">Se connecter</button>
+      </form>
+    </div>
+  </div>
+  <div class="flex min-h-screen">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-gray-800 text-white flex flex-col p-4">
+      <h1 class="text-2xl font-bold mb-6">🎮 E-Sport CMS</h1>
+      <nav class="space-y-3">
+        <a href="index.html" class="block hover:text-indigo-400">🏠 Dashboard</a>
+        <a href="players.html" class="block hover:text-indigo-400">🧑‍🤝‍🧑 Joueurs</a>
+        <a href="teams.html" class="block hover:text-indigo-400">👥 Équipes</a>
+        <a href="jeux.html" class="block hover:text-indigo-400">🕹️ Jeux</a>
+        <a href="tournois.html" class="block hover:text-indigo-400">🏆 Tournois</a>
+        <a href="matchs.html" class="block hover:text-indigo-400">🎮 Matchs</a>
+        <a href="statistiques.html" class="block hover:text-indigo-400">📊 Statistiques</a>
+        <a href="setting.html" class="block font-bold text-indigo-400">⚙️ Paramètres</a>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 p-6 space-y-8">
+      <div class="flex items-center justify-between">
+        <h2 class="text-3xl font-semibold">Les jeux</h2>
+        <button class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700" onclick="openForm()">➕ Ajouter un jeu</button>
+      </div>
+
+      <!-- Liste des jeux -->
+      <div class="bg-white p-4 rounded shadow">
+        <table class="min-w-full">
+          <thead>
+            <tr>
+              <th class="text-left py-2">Nom</th>
+              <th class="text-left py-2">Slug</th>
+              <th class="text-left py-2">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="py-2">CS:GO</td>
+              <td class="py-2">csgo</td>
+              <td class="py-2 space-x-2">
+                <button class="text-blue-600 hover:underline" onclick="editGame('CS:GO', 'csgo')">Modifier</button>
+                <button class="text-red-600 hover:underline">Supprimer</button>
+              </td>
+            </tr>
+            <tr>
+              <td class="py-2">Valorant</td>
+              <td class="py-2">valorant</td>
+              <td class="py-2 space-x-2">
+                <button class="text-blue-600 hover:underline" onclick="editGame('Valorant', 'valorant')">Modifier</button>
+                <button class="text-red-600 hover:underline">Supprimer</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Formulaire jeu -->
+      <div id="gameForm" class="hidden bg-white p-6 rounded shadow max-w-xl">
+        <h3 class="text-xl font-semibold mb-4">Ajouter / Modifier un jeu</h3>
+        <form class="space-y-4">
+          <div>
+            <label class="block mb-1">Nom du jeu</label>
+            <input id="gameName" type="text" class="w-full p-2 border rounded" required>
+          </div>
+          <div>
+            <label class="block mb-1">Slug</label>
+            <input id="gameSlug" type="text" class="w-full p-2 border rounded" required>
+          </div>
+          <div class="flex justify-end space-x-2">
+            <button type="button" onclick="closeForm()" class="px-4 py-2 border rounded">Annuler</button>
+            <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700">Enregistrer</button>
+          </div>
+        </form>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    function openForm() {
+      document.getElementById('gameForm').classList.remove('hidden');
+    }
+    function closeForm() {
+      document.getElementById('gameForm').classList.add('hidden');
+    }
+    function editGame(name, slug) {
+      openForm();
+      document.getElementById('gameName').value = name;
+      document.getElementById('gameSlug').value = slug;
+    }
+  </script>
+</body>
+</html>

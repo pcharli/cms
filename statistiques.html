@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Statistiques - E-Sport CMS</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-100 text-gray-900">
+   <!-- Header -->
+<header class="w-full bg-white shadow px-6 py-4 flex justify-end items-center">
+  <button onclick="document.getElementById('loginModal').classList.remove('hidden')" class="text-indigo-600 hover:underline font-medium">Se connecter</button>
+</header>
+
+<!-- Login Modal -->
+<div id="loginModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+  <div class="bg-white rounded-lg shadow-lg w-full max-w-sm p-6 relative">
+    <button onclick="document.getElementById('loginModal').classList.add('hidden')" class="absolute top-2 right-2 text-gray-500 hover:text-gray-800 text-xl">&times;</button>
+    <h2 class="text-xl font-semibold mb-4 text-center">Connexion</h2>
+    <form>
+      <div class="mb-4">
+        <label for="login" class="block text-sm font-medium text-gray-700">Login</label>
+        <input type="text" id="login" class="mt-1 w-full border rounded-md px-3 py-2 focus:outline-none focus:ring focus:border-indigo-300" required>
+      </div>
+      <div class="mb-4">
+        <label for="password" class="block text-sm font-medium text-gray-700">Mot de passe</label>
+        <input type="password" id="password" class="mt-1 w-full border rounded-md px-3 py-2 focus:outline-none focus:ring focus:border-indigo-300" required>
+      </div>
+      <button type="submit" class="w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700">Se connecter</button>
+    </form>
+  </div>
+</div>
+  <div class="flex min-h-screen">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-gray-800 text-white flex flex-col p-4">
+      <h1 class="text-2xl font-bold mb-6">🎮 E-Sport CMS</h1>
+      <nav class="space-y-3">
+        <a href="index.html" class="block hover:text-indigo-400">🏠 Dashboard</a>
+        <a href="players.html" class="block hover:text-indigo-400">🧑‍🤝‍🧑 Joueurs</a>
+        <a href="teams.html" class="block hover:text-indigo-400">👥 Équipes</a>
+        <a href="jeux.html" class="block hover:text-indigo-400">🕹️ Jeux</a>
+        <a href="tournois.html" class="block hover:text-indigo-400">🏆 Tournois</a>
+        <a href="matchs.html" class="block hover:text-indigo-400">🎮 Matchs</a>
+        <a href="statistiques.html" class="block font-bold text-indigo-400">📊 Statistiques</a>
+        <a href="setting.html" class="block hover:text-indigo-400">⚙️ Paramètres</a>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 p-6 space-y-8">
+      <h2 class="text-3xl font-semibold mb-6">Statistiques</h2>
+
+      <!-- Filtres -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div>
+          <label for="filterGame" class="block text-sm font-medium text-gray-700">🎮 Jeu</label>
+          <select id="filterGame" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+            <option>Tous</option>
+            <option>CS:GO</option>
+            <option>Valorant</option>
+            <option>Rocket League</option>
+            <option>LoL</option>
+          </select>
+        </div>
+        <div>
+          <label for="filterPeriod" class="block text-sm font-medium text-gray-700">🕒 Période</label>
+          <select id="filterPeriod" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+            <option>Cette semaine</option>
+            <option>Ce mois</option>
+            <option>3 derniers mois</option>
+          </select>
+        </div>
+        <div>
+          <label for="filterMatch" class="block text-sm font-medium text-gray-700">🎮 Match</label>
+          <select id="filterMatch" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+            <option>Tous</option>
+            <option>Matchs joués</option>
+            <option>Matchs à venir</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Graphiques principaux -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-white p-4 rounded-lg shadow">
+          <h3 class="text-lg font-medium mb-2">Répartition des matchs par jeu</h3>
+          <canvas id="pieChart" height="100"></canvas>
+        </div>
+
+        <div class="bg-white p-4 rounded-lg shadow">
+          <h3 class="text-lg font-medium mb-2">Top 5 joueurs les plus actifs</h3>
+          <canvas id="barChart" height="100"></canvas>
+        </div>
+      </div>
+
+      <div class="bg-white p-4 rounded-lg shadow">
+        <h3 class="text-lg font-medium mb-2">Vues globales des matchs (7 derniers jours)</h3>
+        <canvas id="lineChart" height="100"></canvas>
+      </div>
+
+      <!-- Trois graphiques en colonnes -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <!-- Graphique : Joueurs par rôle -->
+        <section class="bg-white rounded-lg shadow p-4">
+          <h3 class="text-lg font-semibold mb-2">Répartition des joueurs par rôle</h3>
+          <canvas id="rolesChart"></canvas>
+        </section>
+
+        <!-- Graphique : Joueurs par équipe -->
+        <section class="bg-white rounded-lg shadow p-4">
+          <h3 class="text-lg font-semibold mb-2">Nombre de joueurs par équipe</h3>
+          <canvas id="playersByTeamChart"></canvas>
+        </section>
+
+        <!-- Graphique : Matchs par tournoi -->
+        <section class="bg-white rounded-lg shadow p-4">
+          <h3 class="text-lg font-semibold mb-2">Nombre de matchs par tournoi</h3>
+          <canvas id="matchesByTournamentChart"></canvas>
+        </section>
+      </div>
+
+    </main>
+  </div>
+
+  <script>
+    const rolesData = {
+      labels: ['DPS', 'Tank', 'Support', 'Flex'],
+      datasets: [{
+        data: [8, 5, 6, 4],
+        backgroundColor: ['#6366f1', '#10b981', '#f59e0b', '#ef4444'],
+      }]
+    };
+
+    const playersByTeamData = {
+      labels: ['Team Alpha', 'Team Beta', 'Team Gamma'],
+      datasets: [{
+        label: 'Joueurs',
+        data: [5, 6, 7],
+        backgroundColor: '#3b82f6',
+      }]
+    };
+
+    const matchesByTournamentData = {
+      labels: ['Gamers Assembly', 'E-Sport World Cup', 'DreamHack'],
+      datasets: [{
+        label: 'Matchs',
+        data: [10, 7, 4],
+        backgroundColor: '#8b5cf6',
+      }]
+    };
+
+    const pieChart = new Chart(document.getElementById('pieChart'), {
+      type: 'pie',
+      data: {
+        labels: ['CS:GO', 'Valorant', 'Rocket League', 'LoL'],
+        datasets: [{
+          data: [12, 9, 7, 5],
+          backgroundColor: ['#6366F1', '#10B981', '#F59E0B', '#EF4444'],
+        }]
+      },
+      options: { responsive: true }
+    });
+
+    const barChart = new Chart(document.getElementById('barChart'), {
+      type: 'bar',
+      data: {
+        labels: ['PlayerOne', 'Zeta', 'Nova', 'Kappa', 'Ghost'],
+        datasets: [{
+          label: 'Matchs joués',
+          data: [22, 19, 17, 15, 14],
+          backgroundColor: '#3B82F6'
+        }]
+      },
+      options: {
+        indexAxis: 'y',
+        responsive: true,
+        plugins: {
+          legend: { display: false }
+        }
+      }
+    });
+
+    const lineChart = new Chart(document.getElementById('lineChart'), {
+      type: 'line',
+      data: {
+        labels: ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'],
+        datasets: [{
+          label: 'Vues',
+          data: [320, 450, 390, 510, 600, 720, 680],
+          borderColor: '#6366F1',
+          backgroundColor: 'rgba(99, 102, 241, 0.1)',
+          fill: true,
+          tension: 0.3
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: false }
+        }
+      }
+    });
+
+    new Chart(document.getElementById('rolesChart'), {
+      type: 'pie',
+      data: rolesData
+    });
+
+    new Chart(document.getElementById('playersByTeamChart'), {
+      type: 'bar',
+      data: playersByTeamData,
+      options: {
+        scales: {
+          y: { beginAtZero: true }
+        }
+      }
+    });
+
+    new Chart(document.getElementById('matchesByTournamentChart'), {
+      type: 'bar',
+      data: matchesByTournamentData,
+      options: {
+        scales: {
+          y: { beginAtZero: true }
+        }
+      }
+    });
+  </script>
+</body>
+</html>

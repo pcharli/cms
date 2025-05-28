@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Matchs - E-Sport CMS</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 text-gray-900">
+     <!-- Header -->
+<header class="w-full bg-white shadow px-6 py-4 flex justify-end items-center">
+    <button onclick="document.getElementById('loginModal').classList.remove('hidden')" class="text-indigo-600 hover:underline font-medium">Se connecter</button>
+  </header>
+  
+  <!-- Login Modal -->
+  <div id="loginModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+    <div class="bg-white rounded-lg shadow-lg w-full max-w-sm p-6 relative">
+      <button onclick="document.getElementById('loginModal').classList.add('hidden')" class="absolute top-2 right-2 text-gray-500 hover:text-gray-800 text-xl">&times;</button>
+      <h2 class="text-xl font-semibold mb-4 text-center">Connexion</h2>
+      <form>
+        <div class="mb-4">
+          <label for="login" class="block text-sm font-medium text-gray-700">Login</label>
+          <input type="text" id="login" class="mt-1 w-full border rounded-md px-3 py-2 focus:outline-none focus:ring focus:border-indigo-300" required>
+        </div>
+        <div class="mb-4">
+          <label for="password" class="block text-sm font-medium text-gray-700">Mot de passe</label>
+          <input type="password" id="password" class="mt-1 w-full border rounded-md px-3 py-2 focus:outline-none focus:ring focus:border-indigo-300" required>
+        </div>
+        <button type="submit" class="w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700">Se connecter</button>
+      </form>
+    </div>
+  </div>
+  <div class="flex min-h-screen">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-gray-800 text-white flex flex-col p-4">
+      <h1 class="text-2xl font-bold mb-6">🎮 E-Sport CMS</h1>
+      <nav class="space-y-3">
+        <a href="index.html" class="block hover:text-indigo-400">🏠 Dashboard</a>
+        <a href="players.html" class="block hover:text-indigo-400">🧑‍🤝‍🧑 Joueurs</a>
+        <a href="teams.html" class="block hover:text-indigo-400">👥 Équipes</a>
+        <a href="jeux.html" class="block hover:text-indigo-400">🕹️ Jeux</a>
+        <a href="tournois.html" class="block hover:text-indigo-400">🏆 Tournois</a>
+        <a href="matchs.html" class="block hover:text-indigo-400 font-bold text-indigo-400">🎮 Matchs</a>
+        <a href="statistiques.html" class="block hover:text-indigo-400">📊 Statistiques</a>
+        <a href="setting.html" class="block hover:text-indigo-400">⚙️ Paramètres</a>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 p-6">
+      <h2 class="text-3xl font-semibold mb-6">Les Matchs</h2>
+
+      <table class="min-w-full bg-white rounded-lg shadow">
+        <thead>
+          <tr class="bg-gray-200 text-left text-sm font-medium text-gray-700">
+            <th class="p-3">Tournoi</th>
+            <th class="p-3">Jeu</th>
+            <th class="p-3">Équipe A</th>
+            <th class="p-3">Équipe B</th>
+            <th class="p-3">Score</th>
+            <th class="p-3">Date</th>
+            <th class="p-3">Voir</th>
+            <th class="p-3 text-right">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="border-t">
+            <td class="p-3">Gamers Assembly</td>
+            <td class="p-3">League of Legends</td>
+            <td class="p-3">Team Alpha</td>
+            <td class="p-3">Team Beta</td>
+            <td class="p-3">13 - 9</td>
+            <td class="p-3">10/06/2025 14:00</td>
+            <td class="p-3"><a href="#" class="text-blue-600 hover:underline">👁️</a></td>
+            <td class="p-3 text-right">
+              <button class="text-blue-500 hover:underline mr-2">Éditer</button>
+              <button class="text-red-500 hover:underline">Supprimer</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="mt-6">
+        <button onclick="document.getElementById('matchFormModal').classList.remove('hidden')" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">➕ Ajouter un match</button>
+      </div>
+
+      <!-- Formulaire modal -->
+      <div id="matchFormModal" class="hidden fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+        <div class="bg-white p-6 rounded-lg shadow-xl w-full max-w-md">
+          <h3 class="text-xl font-semibold mb-4">Ajouter / Éditer un match</h3>
+          <form class="space-y-4">
+            <div>
+              <label class="block text-sm font-medium mb-1">Tournoi</label>
+              <select class="w-full border-gray-300 rounded px-3 py-2">
+                <option>Gamers Assembly</option>
+                <option>E-Sport World Cup</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1">Équipe A</label>
+              <select class="w-full border-gray-300 rounded px-3 py-2">
+                <option>Team Alpha</option>
+                <option>Team Beta</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1">Équipe B</label>
+              <select class="w-full border-gray-300 rounded px-3 py-2">
+                <option>Team Alpha</option>
+                <option>Team Beta</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1">Date</label>
+              <input type="datetime-local" class="w-full border-gray-300 rounded px-3 py-2" />
+            </div>
+            <div class="flex justify-end space-x-2">
+              <button type="button" onclick="document.getElementById('matchFormModal').classList.add('hidden')" class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">Annuler</button>
+              <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700">Enregistrer</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
