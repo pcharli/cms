@@ -22,25 +22,15 @@
 <body class="bg-gray-100 text-gray-900">
   <!-- Header -->
   <header class="w-full bg-white shadow px-6 py-4 flex justify-end items-center">
-    <button onclick="document.getElementById('loginModal').classList.remove('hidden')" class="text-indigo-600 hover:underline font-medium">Se connecter</button>
+    <button onclick="document.getElementById('loginModal').classList.remove('hidden')" class="text-indigo-600 hover:underline font-medium">Se déconnecter</button>
   </header>
 
   <!-- Login Modal -->
   <div id="loginModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
     <div class="bg-white rounded-lg shadow-lg w-full max-w-sm p-6 relative">
       <button onclick="document.getElementById('loginModal').classList.add('hidden')" class="absolute top-2 right-2 text-gray-500 hover:text-gray-800 text-xl">&times;</button>
-      <h2 class="text-xl font-semibold mb-4 text-center">Connexion</h2>
-      <form>
-        <div class="mb-4">
-          <label for="login" class="block text-sm font-medium text-gray-700">Login</label>
-          <input type="text" id="login" class="mt-1 w-full border rounded-md px-3 py-2 focus:outline-none focus:ring focus:border-indigo-300" required>
-        </div>
-        <div class="mb-4">
-          <label for="password" class="block text-sm font-medium text-gray-700">Mot de passe</label>
-          <input type="password" id="password" class="mt-1 w-full border rounded-md px-3 py-2 focus:outline-none focus:ring focus:border-indigo-300" required>
-        </div>
-        <button type="submit" class="w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700">Se connecter</button>
-      </form>
+      <h2 class="text-xl font-semibold mb-4 text-center">Déconnexion</h2>
+      <p>Vous êtes déconnecté</p>
     </div>
   </div>
 
