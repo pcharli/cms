@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Graphique à barres SVG</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    svg {
+      border: 1px solid #ccc;
+      background: #f9f9f9;
+    }
+    .bar {
+      fill: #3b82f6;
+      transition: fill 0.3s;
+      cursor: pointer;
+    }
+    .bar:hover {
+      fill: #2563eb;
+    }
+    text {
+      font-size: 12px;
+      fill: #333;
+      user-select: none;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Graphique à barres en SVG</h2>
+
+<svg id="barChart" width="600" height="300"></svg>
+
+<script>
+  const data = [
+    { label: 'Jan', value: 40 },
+    { label: 'Fév', value: 80 },
+    { label: 'Mar', value: 65 },
+    { label: 'Avr', value: 90 },
+    { label: 'Mai', value: 55 }
+  ];
+
+  const svg = document.getElementById('barChart');
+  const width = svg.clientWidth;
+  const height = svg.clientHeight;
+  const padding = 40;
+  const barWidth = (width - padding * 2) / data.length;
+  const maxValue = 100;
+
+  // Axe Y (graduations)
+  for(let i = 0; i <= 5; i++) {
+    const y = padding + ((height - padding * 2) / 5) * i;
+    const value = maxValue - (maxValue / 5) * i;
+
+    // Ligne horizontale
+    const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    line.setAttribute("x1", padding);
+    line.setAttribute("y1", y);
+    line.setAttribute("x2", width - padding);
+    line.setAttribute("y2", y);
+    line.setAttribute("stroke", "#ccc");
+    line.setAttribute("stroke-dasharray", "2,2");
+    svg.appendChild(line);
+
+    // Label axe Y
+    const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    text.setAttribute("x", padding - 10);
+    text.setAttribute("y", y + 4);
+    text.setAttribute("text-anchor", "end");
+    text.textContent = value;
+    svg.appendChild(text);
+  }
+
+  // Dessiner les barres
+  data.forEach((item, index) => {
+    const barHeight = (item.value / maxValue) * (height - padding * 2);
+    const x = padding + index * barWidth + barWidth * 0.15;
+    const y = height - padding - barHeight;
+
+    // Barre
+    const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+    rect.setAttribute("x", x);
+    rect.setAttribute("y", y);
+    rect.setAttribute("width", barWidth * 0.7);
+    rect.setAttribute("height", barHeight);
+    rect.setAttribute("class", "bar");
+    svg.appendChild(rect);
+
+    // Valeur au-dessus de la barre
+    const valText = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    valText.setAttribute("x", x + barWidth * 0.35);
+    valText.setAttribute("y", y - 5);
+    valText.setAttribute("text-anchor", "middle");
+    valText.textContent = item.value;
+    svg.appendChild(valText);
+
+    // Label sous la barre
+    const labelText = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    labelText.setAttribute("x", x + barWidth * 0.35);
+    labelText.setAttribute("y", height - padding + 15);
+    labelText.setAttribute("text-anchor", "middle");
+    labelText.textContent = item.label;
+    svg.appendChild(labelText);
+  });
+</script>
+
+</body>
+</html>

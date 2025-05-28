@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Graphique Courbe SVG natif</title>
+  <style>
+    svg {
+      max-width: 600px;
+      max-height: 300px;
+      margin: 20px auto;
+      display: block;
+      background: #f9fafb;
+      border: 1px solid #ddd;
+    }
+    .axis path,
+    .axis line {
+      stroke: #888;
+      stroke-width: 1;
+      shape-rendering: crispEdges;
+    }
+    .grid line {
+      stroke: #eee;
+      stroke-width: 1;
+      shape-rendering: crispEdges;
+    }
+    text {
+      font-family: sans-serif;
+      font-size: 12px;
+      fill: #666;
+    }
+    .line {
+      fill: none;
+      stroke: #3b82f6;
+      stroke-width: 3;
+    }
+    .dot {
+      fill: #3b82f6;
+      stroke: white;
+      stroke-width: 1.5;
+    }
+  </style>
+</head>
+<body>
+  <h2 style="text-align:center;">Nombre de matchs par tournoi</h2>
+
+  <svg viewBox="0 0 600 300" width="600" height="300" role="img" aria-label="Graphique en courbe représentant le nombre de matchs par tournoi">
+    <!-- Axes, grille et courbe seront ajoutés en JS -->
+  </svg>
+
+  <script>
+    const svg = document.querySelector('svg');
+
+    // Données à afficher (label + valeur)
+    const data = [
+      { label: "Tournoi Alpha", value: 18 },
+      { label: "Tournoi Beta", value: 10 },
+      { label: "Tournoi Gamma", value: 22 },
+      { label: "Tournoi Delta", value: 15 },
+      { label: "Tournoi Epsilon", value: 25 }
+    ];
+
+    const width = 600;
+    const height = 300;
+    const margin = { top: 30, right: 40, bottom: 50, left: 50 };
+
+    // Calcul des dimensions intérieures
+    const innerWidth = width - margin.left - margin.right;
+    const innerHeight = height - margin.top - margin.bottom;
+
+    // Trouver la valeur max
+    const maxValue = Math.max(...data.map(d => d.value));
+
+    // Fonctions de mise à l'échelle simples (linear)
+    const xScale = (index) => margin.left + (index / (data.length - 1)) * innerWidth;
+    const yScale = (value) => margin.top + innerHeight - (value / maxValue) * innerHeight;
+
+    // Création des axes X (labels)
+    data.forEach((d, i) => {
+      const x = xScale(i);
+      const y = margin.top + innerHeight + 20;
+
+      // Label texte
+      const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+      text.setAttribute("x", x);
+      text.setAttribute("y", y);
+      text.setAttribute("text-anchor", "middle");
+      text.textContent = d.label;
+      svg.appendChild(text);
+    });
+
+    // Création de l'axe Y avec graduations simples
+    const steps = 5;
+    for(let i = 0; i <= steps; i++) {
+      const y = margin.top + (innerHeight / steps) * i;
+      const value = Math.round(maxValue * (1 - i / steps));
+
+      // Ligne horizontale de la grille
+      const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+      line.setAttribute("x1", margin.left);
+      line.setAttribute("x2", width - margin.right);
+      line.setAttribute("y1", y);
+      line.setAttribute("y2", y);
+      line.setAttribute("class", "grid");
+      line.style.stroke = "#eee";
+      svg.appendChild(line);
+
+      // Label valeur Y
+      const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+      text.setAttribute("x", margin.left - 10);
+      text.setAttribute("y", y + 4);
+      text.setAttribute("text-anchor", "end");
+      text.textContent = value;
+      svg.appendChild(text);
+    }
+
+    // Création du chemin de la courbe (ligne)
+    let pathD = data.map((d, i) => {
+      const x = xScale(i);
+      const y = yScale(d.value);
+      return (i === 0 ? "M" : "L") + x + " " + y;
+    }).join(" ");
+
+    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    path.setAttribute("d", pathD);
+    path.setAttribute("class", "line");
+    svg.appendChild(path);
+
+    // Cercles sur les points de données
+    data.forEach((d, i) => {
+      const cx = xScale(i);
+      const cy = yScale(d.value);
+
+      const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+      circle.setAttribute("cx", cx);
+      circle.setAttribute("cy", cy);
+      circle.setAttribute("r", 5);
+      circle.setAttribute("class", "dot");
+      svg.appendChild(circle);
+    });
+  </script>
+</body>
+</html>

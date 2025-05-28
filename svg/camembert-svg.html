@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Camembert SVG natif</title>
+  <style>
+    svg {
+      max-width: 300px;
+      max-height: 300px;
+      margin: 20px auto;
+      display: block;
+      border-radius: 50%;;
+    }
+    text {
+      font-family: sans-serif;
+      font-size: 14px;
+      fill: #333;
+    }
+    .label {
+      cursor: pointer;
+      user-select: none;
+      transition: fill 0.3s;
+    }
+    .label:hover {
+      fill: #6366f1; /* Indigo */
+    }
+  </style>
+</head>
+<body>
+  <h2 style="text-align:center;">Répartition des joueurs par rôle</h2>
+
+  <svg viewBox="0 0 32 32" width="300" height="300" role="img" aria-label="Graphique camembert représentant la répartition des joueurs par rôle">
+    <!-- Les parts seront insérées ici par JS -->
+  </svg>
+
+  <script>
+    const data = [
+      { label: "DPS", value: 45, color: "#6366f1" },
+      { label: "Tank", value: 25, color: "#10b981" },
+      { label: "Support", value: 30, color: "#f59e0b" }
+    ];
+
+    const svg = document.querySelector('svg');
+    const radius = 16; // Rayon du cercle
+    const circumference = 2 * Math.PI * radius;
+
+    let offset = 0;
+
+    data.forEach((slice, i) => {
+      const sliceLength = (slice.value / 100) * circumference;
+
+      const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+      circle.setAttribute("r", radius);
+      circle.setAttribute("cx", 16);
+      circle.setAttribute("cy", 16);
+      circle.setAttribute("fill", "transparent");
+      circle.setAttribute("stroke", slice.color);
+      circle.setAttribute("stroke-width", 32); // Epaisseur (diamètre du doughnut)
+      circle.setAttribute("stroke-dasharray", `${sliceLength} ${circumference - sliceLength}`);
+      circle.setAttribute("stroke-dashoffset", -offset);
+      circle.style.transition = "stroke-dashoffset 0.5s ease";
+      svg.appendChild(circle);
+
+      offset += sliceLength;
+
+      // Ajouter légende avec label et couleur
+      const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+      text.setAttribute("x", 32);
+      text.setAttribute("y", 10 + i * 12);
+      text.setAttribute("class", "label");
+      text.textContent = `${slice.label} (${slice.value}%)`;
+      text.style.fill = slice.color;
+      svg.appendChild(text);
+    });
+  </script>
+</body>
+</html>

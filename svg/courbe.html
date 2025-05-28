@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Graphique courbe lissée SVG dynamique</title>
+  <style>
+    svg {
+      width: 600px;
+      height: 300px;
+      border: 1px solid #ccc;
+      background: #fafafa;
+    }
+    .grid line {
+      stroke: #eee;
+      stroke-width: 1;
+    }
+    .curve {
+      fill: none;
+      stroke: #3b82f6;
+      stroke-width: 3;
+    }
+    .point {
+      fill: #2563eb;
+      stroke: white;
+      stroke-width: 2;
+    }
+    text {
+      font-size: 12px;
+      fill: #333;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Graphique courbe lissée SVG dynamique</h2>
+
+<svg id="graph" viewBox="0 0 600 300" aria-label="Graphique courbe lissée"></svg>
+
+<script>
+  // Données exemple : chaque point a un label (x) et une valeur (y)
+  const data = [
+    { label: 'Jan', value: 50 },
+    { label: 'Fév', value: 70 },
+    { label: 'Mar', value: 30 },
+    { label: 'Avr', value: 90 },
+    { label: 'Mai', value: 60 }
+  ];
+
+  const svg = document.getElementById('graph');
+  const width = 600;
+  const height = 300;
+  const paddingLeft = 40;
+  const paddingBottom = 20;
+  const paddingTop = 20;
+  const paddingRight = 10;
+
+  // Calcul max valeur pour normaliser la hauteur
+  const maxValue = Math.max(...data.map(d => d.value));
+
+  // Espacement horizontal entre points
+  const gapX = (width - paddingLeft - paddingRight) / (data.length - 1);
+
+  // Fonction pour calculer coordonnées SVG d’un point
+  function getPointCoords(i) {
+    const x = paddingLeft + i * gapX;
+    // Inverse y car SVG a 0 en haut
+    const y = height - paddingBottom - (data[i].value / maxValue) * (height - paddingTop - paddingBottom);
+    return { x, y };
+  }
+
+  // Générer la grille horizontale (5 lignes)
+  for(let i = 0; i <= 5; i++) {
+    const y = paddingTop + i * ((height - paddingTop - paddingBottom) / 5);
+    const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    line.setAttribute("x1", paddingLeft);
+    line.setAttribute("x2", width - paddingRight);
+    line.setAttribute("y1", y);
+    line.setAttribute("y2", y);
+    line.setAttribute("stroke", "#eee");
+    line.setAttribute("stroke-width", "1");
+    svg.appendChild(line);
+  }
+
+  // Dessiner axes X et Y
+  const axisY = document.createElementNS("http://www.w3.org/2000/svg", "line");
+  axisY.setAttribute("x1", paddingLeft);
+  axisY.setAttribute("y1", paddingTop);
+  axisY.setAttribute("x2", paddingLeft);
+  axisY.setAttribute("y2", height - paddingBottom);
+  axisY.setAttribute("stroke", "#666");
+  axisY.setAttribute("stroke-width", "2");
+  svg.appendChild(axisY);
+
+  const axisX = document.createElementNS("http://www.w3.org/2000/svg", "line");
+  axisX.setAttribute("x1", paddingLeft);
+  axisX.setAttribute("y1", height - paddingBottom);
+  axisX.setAttribute("x2", width - paddingRight);
+  axisX.setAttribute("y2", height - paddingBottom);
+  axisX.setAttribute("stroke", "#666");
+  axisX.setAttribute("stroke-width", "2");
+  svg.appendChild(axisX);
+
+  // Construire le path de la courbe lissée avec cubic Bézier
+
+  // Pour simplifier, on va faire une courbe passant par tous les points,
+  // en calculant les points de contrôle entre chaque segment.
+  // Méthode simplifiée : control points à mi-chemin entre points adjacents.
+
+  function bezierPath(points) {
+    if(points.length < 2) return '';
+
+    let d = `M ${points[0].x} ${points[0].y}`;
+
+    for(let i = 0; i < points.length - 1; i++) {
+      const p0 = points[i === 0 ? i : i - 1];
+      const p1 = points[i];
+      const p2 = points[i + 1];
+      const p3 = points[i + 2 < points.length ? i + 2 : i + 1];
+
+      // Calcul des points de contrôle pour cubic Bézier
+      const cp1x = p1.x + (p2.x - p0.x) / 6;
+      const cp1y = p1.y + (p2.y - p0.y) / 6;
+
+      const cp2x = p2.x - (p3.x - p1.x) / 6;
+      const cp2y = p2.y - (p3.y - p1.y) / 6;
+
+      d += ` C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${p2.x} ${p2.y}`;
+    }
+
+    return d;
+  }
+
+  // Calculer les points SVG
+  const points = data.map((_, i) => getPointCoords(i));
+
+  // Créer l’élément path
+  const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+  path.setAttribute("d", bezierPath(points));
+  path.setAttribute("class", "curve");
+  svg.appendChild(path);
+
+  // Dessiner les points
+  points.forEach(p => {
+    const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    circle.setAttribute("cx", p.x);
+    circle.setAttribute("cy", p.y);
+    circle.setAttribute("r", 6);
+    circle.setAttribute("class", "point");
+    svg.appendChild(circle);
+  });
+
+  // Ajouter labels sur l’axe X
+  points.forEach((p, i) => {
+    const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    text.setAttribute("x", p.x);
+    text.setAttribute("y", height - 2);
+    text.setAttribute("text-anchor", "middle");
+    text.textContent = data[i].label;
+    svg.appendChild(text);
+  });
+</script>
+
+</body>
+</html>

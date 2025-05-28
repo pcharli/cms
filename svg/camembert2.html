@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Camembert dynamique sans SVG</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px;
+    }
+
+    .pie-container {
+      position: relative;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .slice-hover {
+      position: absolute;
+      width: 50%;
+      height: 50%;
+      top: 50%;
+      left: 50%;
+      transform-origin: 0% 0%;
+      background: transparent;
+      pointer-events: auto;
+    }
+
+    .tooltip {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: #f3f4f6;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Camembert dynamique (HTML/CSS/JS sans SVG)</h2>
+
+<div class="pie-container" id="pie"></div>
+<div class="tooltip" id="tooltip">Info</div>
+
+<script>
+  const data = [
+    { label: "Valorant", value: 40, color: "#3b82f6" },
+    { label: "League of Legends", value: 30, color: "#10b981" },
+    { label: "CS2", value: 20, color: "#f59e0b" },
+    { label: "Rocket League", value: 10, color: "#ef4444" }
+  ];
+
+  const total = data.reduce((sum, d) => sum + d.value, 0);
+  const pie = document.getElementById('pie');
+  const tooltip = document.getElementById('tooltip');
+
+  // Générer le gradient conique
+  let currentAngle = 0;
+  let gradientParts = [];
+
+  data.forEach(d => {
+    const start = currentAngle;
+    const angle = (d.value / total) * 360;
+    const end = start + angle;
+    gradientParts.push(`${d.color} ${start}deg ${end}deg`);
+    currentAngle = end;
+  });
+
+  pie.style.background = `conic-gradient(${gradientParts.join(', ')})`;
+
+  // Ajouter les zones interactives
+  let rotateBase = 0;
+  data.forEach(d => {
+    const angle = (d.value / total) * 360;
+    const slice = document.createElement('div');
+    slice.className = 'slice-hover';
+    slice.dataset.label = `${d.label} (${d.value}%)`;
+    slice.style.transform = `rotate(${rotateBase}deg) skewY(${90 - angle}deg)`;
+    rotateBase += angle;
+    pie.appendChild(slice);
+
+    slice.addEventListener('mouseenter', () => {
+      tooltip.textContent = slice.dataset.label;
+      tooltip.style.display = 'block';
+    });
+    slice.addEventListener('mouseleave', () => {
+      tooltip.style.display = 'none';
+    });
+    slice.addEventListener('click', () => {
+      alert(`Vous avez cliqué sur : ${slice.dataset.label}`);
+    });
+  });
+</script>
+
+</body>
+</html>
