@@ -9,7 +9,7 @@
 <body class="bg-gray-100 text-gray-900" id="body">
      <!-- Header -->
 <header class="w-full bg-white shadow px-6 py-4 flex justify-end items-center">
-    <a href="index.html" class="text-indigo-600 hover:underline font-medium">Se déconnecter</a>
+    <a href="index.html" class="text-indigo-600 hover:underline font-medium">Se connecter</a>
   </header>
   
 
@@ -36,71 +36,14 @@
       <!-- Onglets -->
       <div>
         <div class="flex border-b space-x-4 mb-4">
-          <button onclick="showTab('tab-users', event)" class="tab-button font-medium py-2 px-4 border-b-2 border-indigo-500 text-indigo-600">Utilisateurs</button>
-          <button onclick="showTab('tab-roles', event)" class="tab-button font-medium py-2 px-4 text-gray-600">Rôles</button>
           <button onclick="showTab('tab-theme', event)" class="tab-button font-medium py-2 px-4 text-gray-600">Personnalisation</button>
-          <button onclick="showTab('tab-notifs', event)" class="tab-button font-medium py-2 px-4 text-gray-600">Notifications</button>
-          <button onclick="showTab('tab-import', event)" class="tab-button font-medium py-2 px-4 text-gray-600">Import / Export</button>
         </div>
 
         <!-- Utilisateurs -->
-        <div id="tab-users" class="tab-content">
-          <div class="flex justify-between items-center mb-2">
-            <h3 class="text-lg font-medium">Utilisateurs</h3>
-            <button onclick="toggleModal('userModal')" class="bg-indigo-500 text-white px-4 py-1 rounded">Ajouter</button>
-          </div>
-          <table class="w-full table-auto bg-white rounded shadow">
-            <thead class="bg-gray-200">
-              <tr>
-                <th class="px-4 py-2 text-left">Nom</th>
-                <th class="px-4 py-2 text-left">Email</th>
-                <th class="px-4 py-2 text-left">Rôle</th>
-                <th class="px-4 py-2">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="border-t">
-                <td class="px-4 py-2">Admin</td>
-                <td class="px-4 py-2">admin@cms.com</td>
-                <td class="px-4 py-2">Administrateur</td>
-                <td class="px-4 py-2 text-center space-x-2">
-                  <button class="text-blue-500 hover:underline">Modifier</button>
-                  <button class="text-red-500 hover:underline">Supprimer</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <!-- Rôles -->
-        <div id="tab-roles" class="tab-content hidden">
-          <div class="flex justify-between items-center mb-2">
-            <h3 class="text-lg font-medium">Rôles & Permissions</h3>
-            <button onclick="toggleModal('roleModal')" class="bg-indigo-500 text-white px-4 py-1 rounded">Nouveau rôle</button>
-          </div>
-          <table class="w-full table-auto bg-white rounded shadow">
-            <thead class="bg-gray-200">
-              <tr>
-                <th class="px-4 py-2 text-left">Nom du rôle</th>
-                <th class="px-4 py-2 text-left">Permissions</th>
-                <th class="px-4 py-2">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="border-t">
-                <td class="px-4 py-2">Administrateur</td>
-                <td class="px-4 py-2">Créer, Modifier, Supprimer</td>
-                <td class="px-4 py-2 text-center space-x-2">
-                  <button class="text-blue-500 hover:underline">Modifier</button>
-                  <button class="text-red-500 hover:underline">Supprimer</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        
 
         <!-- Personnalisation -->
-        <div id="tab-theme" class="tab-content hidden">
+        <div id="tab-theme" class="tab-content">
           <h3 class="text-lg font-medium mb-2">Personnalisation</h3>
           <label class="inline-flex items-center">
             <input type="radio" name="theme" value="light" class="form-radio text-indigo-600" checked onchange="switchTheme('light')">
@@ -112,33 +55,7 @@
           </label>
         </div>
 
-        <!-- Notifications -->
-        <div id="tab-notifs" class="tab-content hidden">
-          <h3 class="text-lg font-medium mb-2">Notifications</h3>
-          <div class="space-y-4">
-            <label class="block">
-              <input type="radio" name="notifType" value="email" class="form-radio text-indigo-600" onclick="toggleNotifFields('email')"> <span class="ml-2">Email</span>
-              <input id="emailField" type="email" placeholder="Email" class="ml-4 border p-1 rounded inline-block" />
-            </label>
-            <label class="block">
-              <input type="radio" name="notifType" value="sms" class="form-radio text-indigo-600" onclick="toggleNotifFields('sms')"> <span class="ml-2">SMS</span>
-              <input id="smsField" type="text" placeholder="N° de GSM" class="ml-4 border p-1 rounded inline-block" />
-            </label>
-            <label class="block">
-              <input type="radio" name="notifType" value="none" class="form-radio text-indigo-600" onclick="toggleNotifFields('none')"> <span class="ml-2">Aucun</span>
-            </label>
-          </div>
-        </div>
-
-        <!-- Import / Export -->
-        <div id="tab-import" class="tab-content hidden">
-          <h3 class="text-lg font-medium mb-2">Import / Export</h3>
-          <div class="space-x-2">
-            <input type="file" class="border rounded p-1" />
-            <button class="bg-green-500 text-white px-3 py-1 rounded">Importer</button>
-            <button class="bg-blue-500 text-white px-3 py-1 rounded">Exporter</button>
-          </div>
-        </div>
+        
       </div>
     </main>
   </div>

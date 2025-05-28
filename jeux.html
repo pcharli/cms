@@ -50,7 +50,7 @@
     <main class="flex-1 p-6 space-y-8">
       <div class="flex items-center justify-between">
         <h2 class="text-3xl font-semibold">Les jeux</h2>
-        <button class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700" onclick="openForm()">➕ Ajouter un jeu</button>
+        
       </div>
 
       <!-- Liste des jeux -->
@@ -60,25 +60,19 @@
             <tr>
               <th class="text-left py-2">Nom</th>
               <th class="text-left py-2">Slug</th>
-              <th class="text-left py-2">Actions</th>
+             
             </tr>
           </thead>
           <tbody>
             <tr>
               <td class="py-2">CS:GO</td>
               <td class="py-2">csgo</td>
-              <td class="py-2 space-x-2">
-                <button class="text-blue-600 hover:underline" onclick="editGame('CS:GO', 'csgo')">Modifier</button>
-                <button class="text-red-600 hover:underline">Supprimer</button>
-              </td>
+            
             </tr>
             <tr>
               <td class="py-2">Valorant</td>
               <td class="py-2">valorant</td>
-              <td class="py-2 space-x-2">
-                <button class="text-blue-600 hover:underline" onclick="editGame('Valorant', 'valorant')">Modifier</button>
-                <button class="text-red-600 hover:underline">Supprimer</button>
-              </td>
+           
             </tr>
           </tbody>
         </table>
