@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "nom": "Team Alpha",
+    "coach": "Julien Martin",
+    "date_creation": "2022-03-15"
+  },
+  {
+    "id": 2,
+    "nom": "Team Beta",
+    "coach": "Sarah Lopez",
+    "date_creation": "2021-11-05"
+  },
+  {
+    "id": 3,
+    "nom": "Team Gamma",
+    "coach": "David Chen",
+    "date_creation": "2023-01-20"
+  },
+  {
+    "id": 4,
+    "nom": "Team Delta",
+    "coach": "Emma Dubois",
+    "date_creation": "2020-07-30"
+  },
+  {
+    "id": 5,
+    "nom": "Team Omega",
+    "coach": "Thomas Bernard",
+    "date_creation": "2022-09-18"
+  }
+]

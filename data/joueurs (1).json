@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "nom": "Alice",
+    "pseudo": "Alicia",
+    "email": "alice@example.com",
+    "equipe_id": 1,
+    "role": "DPS"
+  },
+  {
+    "id": 2,
+    "nom": "Bob",
+    "pseudo": "Bobby",
+    "email": "bob@example.com",
+    "equipe_id": 1,
+    "role": "Tank"
+  },
+  {
+    "id": 3,
+    "nom": "Charlie",
+    "pseudo": "Char",
+    "email": "charlie@example.com",
+    "equipe_id": 2,
+    "role": "Support"
+  },
+  {
+    "id": 4,
+    "nom": "Diana",
+    "pseudo": "Di",
+    "email": "diana@example.com",
+    "equipe_id": 2,
+    "role": "DPS"
+  },
+  {
+    "id": 5,
+    "nom": "Eve",
+    "pseudo": "Evie",
+    "email": "eve@example.com",
+    "equipe_id": 3,
+    "role": "Support"
+  },
+  {
+    "id": 6,
+    "nom": "Frank",
+    "pseudo": "Franky",
+    "email": "frank@example.com",
+    "equipe_id": 3,
+    "role": "Tank"
+  }
+]

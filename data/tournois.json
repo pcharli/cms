@@ -1,0 +1,37 @@
+[
+  {
+    "id": 1,
+    "name": "Tournament 1",
+    "location": "Paris",
+    "date": "2025-05-29",
+    "game_id": 5
+  },
+  {
+    "id": 2,
+    "name": "Tournament 2",
+    "location": "Berlin",
+    "date": "2025-06-28",
+    "game_id": 3
+  },
+  {
+    "id": 3,
+    "name": "Tournament 3",
+    "location": "Madrid",
+    "date": "2025-07-28",
+    "game_id": 3
+  },
+  {
+    "id": 4,
+    "name": "Tournament 4",
+    "location": "Berlin",
+    "date": "2025-08-27",
+    "game_id": 3
+  },
+  {
+    "id": 5,
+    "name": "Tournament 5",
+    "location": "Paris",
+    "date": "2025-09-26",
+    "game_id": 5
+  }
+]

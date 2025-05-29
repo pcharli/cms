@@ -1,0 +1,7 @@
+id,nom,pseudo,email,equipe_id,role
+1,Alice,Alicia,alice@example.com,1,DPS
+2,Bob,Bobby,bob@example.com,1,Tank
+3,Charlie,Char,charlie@example.com,2,Support
+4,Diana,Di,diana@example.com,2,DPS
+5,Eve,Evie,eve@example.com,3,Support
+6,Frank,Franky,frank@example.com,3,Tank
